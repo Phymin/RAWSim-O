@@ -89,6 +89,12 @@ namespace RAWSimO.MultiAgentPathFinding.Algorithms.AStar
                 //get n with lowest value
                 int n = Q.Dequeue().Value;
 
+                if (n == 851 || n == 919 || n == 920 || n == 888)
+                {
+                    Open.Remove(n);
+                    continue;
+                }
+
                 //set on closed
                 Open.Remove(n);
                 Closed.Add(n);

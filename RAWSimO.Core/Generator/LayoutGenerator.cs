@@ -169,7 +169,7 @@ namespace RAWSimO.Core.Generator
                     Console.Write((
                         showRows ? i.ToString().PadLeft(maxRowIndexLength) :
                         showCols ? j.ToString().PadLeft(maxColIndexLength) :
-                        (tiles[i, j] != null ? tiles[i, j].directionAsString() : " ")) + 
+                        (tiles[i, j] != null ? tiles[i, j].directionAsString() : " ")) +
                         (j == tiles.GetLength(1) - 1 ? "" : " "));
                 Console.WriteLine();
             }
@@ -383,13 +383,29 @@ namespace RAWSimO.Core.Generator
             List<Waypoint> potentialBotLocations = waypoints.SelectMany(w => w).Where(w => w.Pod == null && w.InputStation == null && w.OutputStation == null).ToList();
             for (int i = 0; i < lc.BotCount; i++)
             {
-                int randomWaypointIndex = rand.NextInt(potentialBotLocations.Count);
-                Waypoint botWaypoint = potentialBotLocations[randomWaypointIndex];
-                int orientation = 0;
+                // int randomWaypointIndex = rand.NextInt(potentialBotLocations.Count);
+                // Waypoint botWaypoint = potentialBotLocations[randomWaypointIndex];
+                // int orientation = 0;
+                // Bot bot = instance.CreateBot(instance.RegisterBotID(), tier, botWaypoint.X, botWaypoint.Y, lc.BotRadius, orientation, lc.PodTransferTime, lc.MaxAcceleration, lc.MaxDeceleration, lc.MaxVelocity, lc.TurnSpeed, lc.CollisionPenaltyTime);
+                // botWaypoint.AddBotApproaching(bot);
+                // bot.CurrentWaypoint = botWaypoint;
+                // potentialBotLocations.RemoveAt(randomWaypointIndex);
+
+                Waypoint botWaypoint = null;
+                double orientation = 0;
+                if (i == 0)
+                {
+                    botWaypoint = potentialBotLocations.Where(waypoint => waypoint.ID == 886).ToList()[0];
+                    orientation = Math.PI;
+                }
+                else if (i == 1)
+                {
+                    botWaypoint = potentialBotLocations.Where(waypoint => waypoint.ID == 885).ToList()[0];
+                }
+
                 Bot bot = instance.CreateBot(instance.RegisterBotID(), tier, botWaypoint.X, botWaypoint.Y, lc.BotRadius, orientation, lc.PodTransferTime, lc.MaxAcceleration, lc.MaxDeceleration, lc.MaxVelocity, lc.TurnSpeed, lc.CollisionPenaltyTime);
                 botWaypoint.AddBotApproaching(bot);
                 bot.CurrentWaypoint = botWaypoint;
-                potentialBotLocations.RemoveAt(randomWaypointIndex);
             }
         }
 
@@ -410,7 +426,7 @@ namespace RAWSimO.Core.Generator
                 for (int column = 0; column < tiles.GetLength(1); column++)
                 {
                     Tile tile = tiles[row, column];
-                    if (tile != null && tile.type.Equals(waypointTypes.Road))
+                    if (tile != null && (tile.type.Equals(waypointTypes.Road) || tile.type.Equals(waypointTypes.StorageLocation)))
                     {
                         Waypoint waypoint = tiles[row, column].wp;
                         waypoints.Last().Add(waypoint);

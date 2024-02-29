@@ -991,22 +991,30 @@ namespace RAWSimO.Core.Control
             {
                 // Determine best pod
                 Pod bestPod = null;
-                _bestPodIStationCandidateSelector.Recycle();
-                foreach (var pod in Instance.ResourceManager.UnusedPods
-                    // Get best pod while ensuring that any work can be done with it
-                    .Where(p => AnyRelevantRequests(p, iStation)))
+                if (bot.ID == 1)
                 {
-                    // Update current candidate to assess
-                    _currentBot = bot;
-                    _currentIStation = iStation;
-                    _currentPod = pod;
-                    // Check whether the current combination is better
-                    if (_bestPodIStationCandidateSelector.Reassess())
-                    {
-                        // Update best candidate
-                        bestPod = _currentPod;
-                    }
+                    bestPod = Instance.ResourceManager.UnusedPods.Where(pod => pod.ID == 73).ToList()[0];
                 }
+
+                // _bestPodIStationCandidateSelector.Recycle();
+                // foreach (var pod in Instance.ResourceManager.UnusedPods
+                //     // Get best pod while ensuring that any work can be done with it
+                //     .Where(p => AnyRelevantRequests(p, iStation)))
+                // {
+                //     // Update current candidate to assess
+                //     _currentBot = bot;
+                //     _currentIStation = iStation;
+                //     _currentPod = pod;
+                //     // Check whether the current combination is better
+                //     if (_bestPodIStationCandidateSelector.Reassess())
+                //     {
+                //         // Update best candidate
+                //         bestPod = _currentPod;
+                //     }
+                // }
+                _currentBot = bot;
+                _currentIStation = iStation;
+                _currentPod = bestPod;
                 // See whether there was a suitable pod
                 if (bestPod != null)
                 {
@@ -1140,22 +1148,30 @@ namespace RAWSimO.Core.Control
             {
                 // Determine best pod
                 Pod bestPod = null;
-                _bestPodOStationCandidateSelector.Recycle();
-                foreach (var pod in Instance.ResourceManager.UnusedPods
-                    // Get best pod while ensuring that any work can be done with it
-                    .Where(p => AnyRelevantRequests(p, oStation, config.FilterForConsideration)))
+                if (bot.ID == 0)
                 {
-                    // Update current candidate to assess
-                    _currentBot = bot;
-                    _currentOStation = oStation;
-                    _currentPod = pod;
-                    // Check whether the current combination is better
-                    if (_bestPodOStationCandidateSelector.Reassess())
-                    {
-                        // Update best candidate
-                        bestPod = _currentPod;
-                    }
+                    bestPod = Instance.ResourceManager.UnusedPods.Where(pod => pod.ID == 77).ToList()[0];
                 }
+
+                // _bestPodOStationCandidateSelector.Recycle();
+                // foreach (var pod in Instance.ResourceManager.UnusedPods
+                //     // Get best pod while ensuring that any work can be done with it
+                //     .Where(p => AnyRelevantRequests(p, oStation, config.FilterForConsideration)))
+                // {
+                //     // Update current candidate to assess
+                //     _currentBot = bot;
+                //     _currentOStation = oStation;
+                //     _currentPod = pod;
+                //     // Check whether the current combination is better
+                //     if (_bestPodOStationCandidateSelector.Reassess())
+                //     {
+                //         // Update best candidate
+                //         bestPod = _currentPod;
+                //     }
+                // }
+                _currentBot = bot;
+                _currentOStation = oStation;
+                _currentPod = bestPod;
                 // See whether there was any suitable pod
                 if (bestPod != null)
                 {
