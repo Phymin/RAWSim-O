@@ -83,13 +83,15 @@ namespace RAWSimO.MultiAgentPathFinding.Algorithms.AStar
             bool successorInOpen;
             bool successorInClosed;
 
+            List<int> blockNodes = new() { 851, 919, 920, 888, 853, 818, 817, 850, 883, 920, 921 };
+
             //open is not empty
             while (Open.Count > 0)
             {
                 //get n with lowest value
                 int n = Q.Dequeue().Value;
 
-                if (n == 851 || n == 919 || n == 920 || n == 888)
+                if (blockNodes.Contains(n))
                 {
                     Open.Remove(n);
                     continue;

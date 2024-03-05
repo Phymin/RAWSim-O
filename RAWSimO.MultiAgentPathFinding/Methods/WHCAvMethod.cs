@@ -136,7 +136,7 @@ namespace RAWSimO.MultiAgentPathFinding.Methods
                 if (Stopwatch.ElapsedMilliseconds / 1000.0 > runtimeLimit * 0.9)
                 {
                     Communicator.SignalTimeout();
-                    return true;
+                    //return true;
                 }
 
                 //Create RRA* search if necessary.
@@ -177,6 +177,8 @@ namespace RAWSimO.MultiAgentPathFinding.Methods
                 if (found)
                 {
                     aStar.GetPathAndReservations(ref agent.Path, out reservations);
+
+                    Console.WriteLine("Find path for agent: {0}, path: {1}", agent.ID, agent.Path.ToString());
 
                     foreach (var reservation in reservations)
                         _reservationTable.Add(reservation);
